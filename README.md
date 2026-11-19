@@ -97,13 +97,40 @@ point `LOCAL_MODEL` at a non-thinking model instead (`llama3.1`,
 
 ## Setup
 
+### Setting up the base machine (if you don't have one yet)
+
+This repo is the AI tutor layer only — it assumes an HP3000/MPE simulator
+is already running somewhere with its console attached to a `screen`
+session. Good news, unlike some of its siblings: there's a genuine
+turnkey path here.
+
+- **[pi3000-c](https://github.com/grutig/pi3000-c)** — the project the
+  original build used. It ships ready-made MPE disk images plus boot
+  scripts, so there's no separate OS-media hunt the way there is for the
+  VAX/VMS sibling of this repo. Follow its own setup instructions to get
+  a booting HP3000 Series II under MPE.
+- **Architecture note:** the pi3000-c Pi binary is 32-bit (`armhf`). If
+  you're on a 64-bit Raspberry Pi OS / Debian install (common on anything
+  Pi 4/5-class), you'll need the `armhf` compat libraries alongside your
+  64-bit userland — `sudo dpkg --add-architecture armhf && sudo apt update
+  && sudo apt install libc6:armhf` before the pi3000-c binary will run.
+- Once it boots, attach its console to a named `screen` session (the way
+  this repo's `.env.example` and `hp3000-bootapi.py` expect, default name
+  `hp3000`) so both your own web console and this repo's boot-API can
+  share it.
+
+None of this is required to get the *chat tutor* running — `CONSOLE_URL`
+and `BOOTAPI_BASE` just need to point at whatever HP3000/MPE `screen`
+session you end up with.
+
 ### Prerequisites
 
 - GNU `screen`, installed on the Pi running the HP3000 replica
   (`apt install screen` on Debian/Raspberry Pi OS if it isn't already).
   `hp3000-bootapi.py` shells out to it directly.
 - A SIMH-based HP3000 Series II simulation running MPE, inside a named
-  `screen` session (default: `hp3000`).
+  `screen` session (default: `hp3000`). See "Setting up the base machine"
+  above if you're starting from scratch.
 - Your own existing web console pointed at that same session (see "Bring
   your own console" above).
 - Node.js 18+ and Python 3 on the host running the boot-API.
