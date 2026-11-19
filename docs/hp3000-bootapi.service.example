@@ -1,0 +1,22 @@
+# Example systemd unit for hp3000-bootapi.py -- runs ON THE MACHINE whose
+# console you want the agent to be able to read/type into (for the HP3000
+# that's the Pi running the SIMH replica itself). Needs the `screen` package
+# and read/write access to the `screen` session your SIMH console runs in.
+#
+# Copy to /etc/systemd/system/hp3000-bootapi.service, adjust the path/user,
+# then:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now hp3000-bootapi
+
+[Unit]
+Description=HP3000 boot-API (screen bridge for the Hacker Replicant)
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/python3 /opt/hp3000-hacker-replicant/hp3000-bootapi.py
+Restart=always
+RestartSec=5
+User=pi
+
+[Install]
+WantedBy=multi-user.target

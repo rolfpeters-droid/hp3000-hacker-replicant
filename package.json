@@ -1,0 +1,16 @@
+{
+  "name": "hp3000-hacker-replicant",
+  "version": "0.1.0",
+  "private": false,
+  "description": "AI tutor/copilot chat panel for a Raspberry Pi-hosted HP3000 Series II/MPE replica -- knows MPE (Multi-Programming Executive), the HP3000's stack-machine architecture, and its business-computing history, and can optionally operate the machine's console. LLM-agnostic: works with any OpenAI-compatible backend (Ollama locally by default, or any hosted provider).",
+  "license": "MIT",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  }
+}
